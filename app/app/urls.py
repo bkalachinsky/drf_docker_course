@@ -6,10 +6,10 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/user/', include('user.urls', namespace='user')),
+    path('api/user/', include('user.urls', namespace='user')),
     path('api/schema/', SpectacularAPIView.as_view(), name='api-schema'),
     path(
-        'api/v1/docs/',
+        'api/docs/',
         SpectacularSwaggerView.as_view(url_name='api-schema'),
         name='api-docs',
     ),
