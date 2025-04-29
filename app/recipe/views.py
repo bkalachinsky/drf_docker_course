@@ -14,6 +14,7 @@ from rest_framework.decorators import action
 from recipe import serializers
 from core.models import Recipe, Tag, Ingredient
 
+
 @extend_schema_view(
     list=extend_schema(
         parameters=[
@@ -51,9 +52,13 @@ class RecipeViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(tags__id__in=tag_ids).distinct()
         if ingredients:
             ingredient_ids = self._params_to_ints(ingredients)
-            queryset = queryset.filter(ingredients__id__in=ingredient_ids).distinct()
+            queryset = queryset.filter(
+                ingredients__id__in=ingredient_ids
+            ).distinct()
 
-        return queryset.filter(user=self.request.user).order_by('-id').distinct()
+        return queryset.filter(
+            user=self.request.user
+        ).order_by('-id').distinct()
 
     def get_serializer_class(self):
         """Return the serializer class for request"""
@@ -99,7 +104,9 @@ class BaseRecipeAttrViewSet(
         if assigned_only:
             queryset = queryset.filter(recipe__isnull=False)
 
-        return queryset.filter(user=self.request.user).order_by('-name').distinct()
+        return queryset.filter(
+            user=self.request.user
+        ).order_by('-name').distinct()
 
 
 class TagViewSet(BaseRecipeAttrViewSet):
